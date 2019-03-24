@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.DayMoneyDmoMapper" >
+  <resultMap id="BaseResultMap" type="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.DayMoneyDmo" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="day" property="day" jdbcType="VARCHAR" />
+    <result column="source" property="source" jdbcType="VARCHAR" />
+    <result column="money" property="money" jdbcType="DECIMAL" />
+    <result column="yesterday" property="yesterday" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, day, source, money, yesterday
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_day_money
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_day_money
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.DayMoneyDmo" >
+    insert into t_day_money (id, day, source, 
+      money, yesterday)
+    values (#{id,jdbcType=VARCHAR}, #{day,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, 
+      #{money,jdbcType=DECIMAL}, #{yesterday,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.DayMoneyDmo" >
+    insert into t_day_money
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="day != null" >
+        day,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="yesterday != null" >
+        yesterday,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="day != null" >
+        #{day,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="yesterday != null" >
+        #{yesterday,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.DayMoneyDmo" >
+    update t_day_money
+    <set >
+      <if test="day != null" >
+        day = #{day,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null" >
+        money = #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="yesterday != null" >
+        yesterday = #{yesterday,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.DayMoneyDmo" >
+    update t_day_money
+    set day = #{day,jdbcType=VARCHAR},
+      source = #{source,jdbcType=VARCHAR},
+      money = #{money,jdbcType=DECIMAL},
+      yesterday = #{yesterday,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

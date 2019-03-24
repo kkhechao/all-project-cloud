@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.ext.WithdrawBankInfoDmoDmlMapper" >
+  <resultMap id="BaseResultMap" type="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.WithdrawBankInfoDmo" >
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="tax_number" property="taxNumber" jdbcType="VARCHAR" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="card_number" property="cardNumber" jdbcType="VARCHAR" />
+    <result column="bank_address" property="bankAddress" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="withdraw_bill_id" property="withdrawBillId" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByWithdrawBillId" parameterType="java.lang.String">
+    delete from t_withdraw_bank_info
+    where withdraw_bill_id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <select id="selectByBillId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from t_withdraw_bank_info where withdraw_bill_id = #{billId}
+  </select>
+</mapper>

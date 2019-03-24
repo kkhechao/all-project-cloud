@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.IncomeInfoDmoMapper" >
+  <resultMap id="BaseResultMap" type="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.IncomeInfoDmo" >
+    <result column="consumption_invoice_id" property="consumptionInvoiceId" jdbcType="VARCHAR" />
+    <result column="account_id" property="accountId" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="DECIMAL" />
+  </resultMap>
+  <insert id="insert" parameterType="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.IncomeInfoDmo" >
+    insert into t_income_info (consumption_invoice_id, account_id, 
+      amount)
+    values (#{consumptionInvoiceId,jdbcType=VARCHAR}, #{accountId,jdbcType=VARCHAR}, 
+      #{amount,jdbcType=DECIMAL})
+  </insert>
+  <insert id="batchInsert">
+    insert into t_income_info (consumption_invoice_id, account_id, amount)
+    values
+    <foreach collection="infos" item="item" separator=",">
+      (#{id,jdbcType=VARCHAR}, #{item.accountId,jdbcType=VARCHAR}, #{item.amount,jdbcType=DECIMAL})
+    </foreach>
+  </insert>
+  <insert id="insertSelective" parameterType="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.IncomeInfoDmo" >
+    insert into t_income_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="consumptionInvoiceId != null" >
+        consumption_invoice_id,
+      </if>
+      <if test="accountId != null" >
+        account_id,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="consumptionInvoiceId != null" >
+        #{consumptionInvoiceId,jdbcType=VARCHAR},
+      </if>
+      <if test="accountId != null" >
+        #{accountId,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+</mapper>

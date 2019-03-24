@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zqkh.wallet.context.appservice.impl.domain.repository.query.SerialLogQuery" >
+  <resultMap id="BaseResultMap" type="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.SerialLogDmo" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="bill_no" property="billNo" jdbcType="VARCHAR" />
+    <result column="money" property="money" jdbcType="DECIMAL" />
+    <result column="direction" property="direction" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+    <result column="account_id" property="accountId" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="balance" property="balance" jdbcType="DECIMAL" />
+    <result column="source" property="source" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="TotalResultMap" type="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.TotalMoneyDmo" >
+    <id column="source" property="source" jdbcType="VARCHAR" />
+    <result column="direction" property="direction" jdbcType="VARCHAR" />
+    <result column="money" property="money" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, bill_no, money, direction, create_time, comment, account_id, type, balance, source
+  </sql>
+
+  <select id="findByAccountId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT
+      <include refid="Base_Column_List"/>
+    FROM
+        t_serial_log
+    WHERE
+        account_id = #{accountId, jdbcType=VARCHAR}
+    AND type = 'INTEGRAL'
+  </select>
+
+    <select id="findYesterdayTotalMoney" resultMap="TotalResultMap">
+        SELECT
+            source, money
+        FROM
+            t_day_money
+        WHERE
+            DATE_FORMAT(DAY, "%Y-%m-%d") = DATE_FORMAT(adddate(now() ,- 1),"%Y-%m-%d")
+        GROUP BY source
+    </select>
+
+  <select id="findTodayMoney" resultMap="TotalResultMap">
+    SELECT
+        source,
+        sum(money) as money
+    FROM
+        (
+            SELECT
+                source,
+                (
+                    CASE direction
+                    WHEN 'IN' THEN
+                        money
+                    WHEN 'OUT' THEN
+                        money *- 1
+                    END
+                ) AS money
+            FROM
+                t_serial_log
+            WHERE source != 'BALANCE' AND DATE_FORMAT(create_time, "%Y-%m-%d") = DATE_FORMAT(now(), "%Y-%m-%d")
+        ) AS t
+    GROUP BY
+        t.source
+  </select>
+
+</mapper>

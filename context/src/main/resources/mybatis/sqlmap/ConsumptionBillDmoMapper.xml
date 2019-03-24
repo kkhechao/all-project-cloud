@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.ConsumptionBillDmoMapper" >
+  <resultMap id="BaseResultMap" type="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.ConsumptionBillDmo" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="business_order_id" property="businessOrderId" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="recharge_bill_number" property="rechargeBillNumber" jdbcType="VARCHAR" />
+    <result column="consumption_type" property="consumptionType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, status, business_order_id, order_id, recharge_bill_number, consumption_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_consumption_bill
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_consumption_bill
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.ConsumptionBillDmo" >
+    insert into t_consumption_bill (id, status, business_order_id, 
+      order_id, recharge_bill_number, consumption_type
+      )
+    values (#{id,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{businessOrderId,jdbcType=VARCHAR}, 
+      #{orderId,jdbcType=VARCHAR}, #{rechargeBillNumber,jdbcType=VARCHAR}, #{consumptionType,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.ConsumptionBillDmo" >
+    insert into t_consumption_bill
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="businessOrderId != null" >
+        business_order_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="rechargeBillNumber != null" >
+        recharge_bill_number,
+      </if>
+      <if test="consumptionType != null" >
+        consumption_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="businessOrderId != null" >
+        #{businessOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeBillNumber != null" >
+        #{rechargeBillNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="consumptionType != null" >
+        #{consumptionType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.ConsumptionBillDmo" >
+    update t_consumption_bill
+    <set >
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="businessOrderId != null" >
+        business_order_id = #{businessOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeBillNumber != null" >
+        recharge_bill_number = #{rechargeBillNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="consumptionType != null" >
+        consumption_type = #{consumptionType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.ConsumptionBillDmo" >
+    update t_consumption_bill
+    set status = #{status,jdbcType=VARCHAR},
+      business_order_id = #{businessOrderId,jdbcType=VARCHAR},
+      order_id = #{orderId,jdbcType=VARCHAR},
+      recharge_bill_number = #{rechargeBillNumber,jdbcType=VARCHAR},
+      consumption_type = #{consumptionType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

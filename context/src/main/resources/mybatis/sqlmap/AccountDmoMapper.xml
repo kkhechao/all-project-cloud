@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.AccountDmoMapper" >
+  <resultMap id="BaseResultMap" type="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.AccountDmo" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="withdraw_available_money" property="withdrawAvailableMoney" jdbcType="DECIMAL" />
+    <result column="consumption_available_money" property="consumptionAvailableMoney" jdbcType="DECIMAL" />
+    <result column="withdraw_freeze_money" property="withdrawFreezeMoney" jdbcType="DECIMAL" />
+    <result column="consumption_freeze_money" property="consumptionFreezeMoney" jdbcType="DECIMAL" />
+    <result column="integral_available_money" property="integralAvailableMoney" jdbcType="DECIMAL" />
+    <result column="integral_freeze_money" property="integralFreezeMoney" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, withdraw_available_money, consumption_available_money, withdraw_freeze_money,
+    consumption_freeze_money, integral_available_money, integral_freeze_money
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_account
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_account
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.AccountDmo" >
+    insert into t_account (id, withdraw_available_money,
+      consumption_available_money, withdraw_freeze_money, 
+      consumption_freeze_money, integral_available_money, 
+      integral_freeze_money)
+    values (#{id,jdbcType=VARCHAR}, #{withdrawAvailableMoney,jdbcType=DECIMAL},
+      #{consumptionAvailableMoney,jdbcType=DECIMAL}, #{withdrawFreezeMoney,jdbcType=DECIMAL}, 
+      #{consumptionFreezeMoney,jdbcType=DECIMAL}, #{integralAvailableMoney,jdbcType=DECIMAL}, 
+      #{integralFreezeMoney,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.AccountDmo" >
+    insert into t_account
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="withdrawAvailableMoney != null" >
+        withdraw_available_money,
+      </if>
+      <if test="consumptionAvailableMoney != null" >
+        consumption_available_money,
+      </if>
+      <if test="withdrawFreezeMoney != null" >
+        withdraw_freeze_money,
+      </if>
+      <if test="consumptionFreezeMoney != null" >
+        consumption_freeze_money,
+      </if>
+      <if test="integralAvailableMoney != null" >
+        integral_available_money,
+      </if>
+      <if test="integralFreezeMoney != null" >
+        integral_freeze_money,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="withdrawAvailableMoney != null" >
+        #{withdrawAvailableMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="consumptionAvailableMoney != null" >
+        #{consumptionAvailableMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="withdrawFreezeMoney != null" >
+        #{withdrawFreezeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="consumptionFreezeMoney != null" >
+        #{consumptionFreezeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="integralAvailableMoney != null" >
+        #{integralAvailableMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="integralFreezeMoney != null" >
+        #{integralFreezeMoney,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.AccountDmo" >
+    update t_account
+    <set >
+      <if test="withdrawAvailableMoney != null" >
+        withdraw_available_money = #{withdrawAvailableMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="consumptionAvailableMoney != null" >
+        consumption_available_money = #{consumptionAvailableMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="withdrawFreezeMoney != null" >
+        withdraw_freeze_money = #{withdrawFreezeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="consumptionFreezeMoney != null" >
+        consumption_freeze_money = #{consumptionFreezeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="integralAvailableMoney != null" >
+        integral_available_money = #{integralAvailableMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="integralFreezeMoney != null" >
+        integral_freeze_money = #{integralFreezeMoney,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.AccountDmo" >
+    update t_account
+    set withdraw_available_money = #{withdrawAvailableMoney,jdbcType=DECIMAL},
+      consumption_available_money = #{consumptionAvailableMoney,jdbcType=DECIMAL},
+      withdraw_freeze_money = #{withdrawFreezeMoney,jdbcType=DECIMAL},
+      consumption_freeze_money = #{consumptionFreezeMoney,jdbcType=DECIMAL},
+      integral_available_money = #{integralAvailableMoney,jdbcType=DECIMAL},
+      integral_freeze_money = #{integralFreezeMoney,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

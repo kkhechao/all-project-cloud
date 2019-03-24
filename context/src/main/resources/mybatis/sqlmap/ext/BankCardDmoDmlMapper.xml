@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.ext.BankCardDmoDmlMapper" >
+  <resultMap id="BaseResultMap" type="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.BankCardDmo" >
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="card_no" property="cardNo" jdbcType="VARCHAR" />
+    <result column="default_flag" property="defaultFlag" jdbcType="BIT" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="bank_address" property="bankAddress" jdbcType="VARCHAR" />
+    <result column="account_id" property="accountId" jdbcType="VARCHAR" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="card_type" property="cardType" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectByAccountId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    *
+    from t_bank_card
+    where account_id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByAccountId" parameterType="java.lang.String">
+    delete from t_bank_card
+    where account_id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="batchInsert">
+    insert into t_bank_card (account_id, code, card_no, default_flag, user_name,type,bank_address,bank_name,card_type)
+    values
+    <foreach collection="bankCards" item="item" separator=",">
+      (#{accountId,jdbcType=VARCHAR}, #{item.code,jdbcType=VARCHAR}, #{item.cardNo,jdbcType=VARCHAR}, #{item.defaultFlag,jdbcType=BIT},
+      #{item.userName,jdbcType=VARCHAR},#{item.type,jdbcType=VARCHAR},#{item.bankAddress,jdbcType=VARCHAR},#{item.bankName,jdbcType=VARCHAR},#{item.cardType,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+</mapper>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.ext.FundingDetailDmoDmlMapper" >
+  <insert id="batchInsert" >
+    insert into t_funding_detail(account_id,title,amount,direction,bill_id,type,role)VALUES
+    <foreach collection="fundingDetailDmos" item="fundingDetailDmo" separator=",">
+      (#{fundingDetailDmo.accountId},#{fundingDetailDmo.title},#{fundingDetailDmo.amount},#{fundingDetailDmo.direction},#{billId},#{fundingDetailDmo.type},#{fundingDetailDmo.role})
+    </foreach>
+  </insert>
+
+  <delete id="deleteByBillId" parameterType="java.lang.String">
+    delete from t_funding_detail where bill_id=#{billId}
+  </delete>
+</mapper>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.WithdrawBillDmoMapper" >
+  <resultMap id="BaseResultMap" type="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.WithdrawBillDmo" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="process_time" property="processTime" jdbcType="TIMESTAMP" />
+    <result column="finish_time" property="finishTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="fee" property="fee" jdbcType="DECIMAL" />
+    <result column="tax" property="tax" jdbcType="DECIMAL" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="withdraw_amount" property="withdrawAmount" jdbcType="DECIMAL" />
+    <result column="remittance_amount" property="remittanceAmount" jdbcType="DECIMAL" />
+    <result column="invoice_status" property="invoiceStatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, process_time, finish_time, status, fee, tax, remark, withdraw_amount, remittance_amount, 
+    invoice_status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_withdraw_bill
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_withdraw_bill
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.WithdrawBillDmo" >
+    insert into t_withdraw_bill (id, process_time, finish_time, 
+      status, fee, tax, remark, 
+      withdraw_amount, remittance_amount, invoice_status
+      )
+    values (#{id,jdbcType=VARCHAR}, #{processTime,jdbcType=TIMESTAMP}, #{finishTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=VARCHAR}, #{fee,jdbcType=DECIMAL}, #{tax,jdbcType=DECIMAL}, #{remark,jdbcType=VARCHAR}, 
+      #{withdrawAmount,jdbcType=DECIMAL}, #{remittanceAmount,jdbcType=DECIMAL}, #{invoiceStatus,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.WithdrawBillDmo" >
+    insert into t_withdraw_bill
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="processTime != null" >
+        process_time,
+      </if>
+      <if test="finishTime != null" >
+        finish_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="fee != null" >
+        fee,
+      </if>
+      <if test="tax != null" >
+        tax,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="withdrawAmount != null" >
+        withdraw_amount,
+      </if>
+      <if test="remittanceAmount != null" >
+        remittance_amount,
+      </if>
+      <if test="invoiceStatus != null" >
+        invoice_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="processTime != null" >
+        #{processTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishTime != null" >
+        #{finishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="fee != null" >
+        #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="tax != null" >
+        #{tax,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="withdrawAmount != null" >
+        #{withdrawAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="remittanceAmount != null" >
+        #{remittanceAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="invoiceStatus != null" >
+        #{invoiceStatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.WithdrawBillDmo" >
+    update t_withdraw_bill
+    <set >
+      <if test="processTime != null" >
+        process_time = #{processTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishTime != null" >
+        finish_time = #{finishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="fee != null" >
+        fee = #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="tax != null" >
+        tax = #{tax,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="withdrawAmount != null" >
+        withdraw_amount = #{withdrawAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="remittanceAmount != null" >
+        remittance_amount = #{remittanceAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="invoiceStatus != null" >
+        invoice_status = #{invoiceStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.WithdrawBillDmo" >
+    update t_withdraw_bill
+    set process_time = #{processTime,jdbcType=TIMESTAMP},
+      finish_time = #{finishTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR},
+      fee = #{fee,jdbcType=DECIMAL},
+      tax = #{tax,jdbcType=DECIMAL},
+      remark = #{remark,jdbcType=VARCHAR},
+      withdraw_amount = #{withdrawAmount,jdbcType=DECIMAL},
+      remittance_amount = #{remittanceAmount,jdbcType=DECIMAL},
+      invoice_status = #{invoiceStatus,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

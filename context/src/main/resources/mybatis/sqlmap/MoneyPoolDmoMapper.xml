@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.MoneyPoolDmoMapper" >
+  <resultMap id="BaseResultMap" type="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.MoneyPoolDmo" >
+    <id column="source" property="source" jdbcType="VARCHAR" />
+    <result column="money" property="money" jdbcType="DECIMAL" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    source, money, comment
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_money_pool
+    where source = #{source,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_money_pool
+    where source = #{source,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.MoneyPoolDmo" >
+    insert into t_money_pool (source, money, comment
+      )
+    values (#{source,jdbcType=VARCHAR}, #{money,jdbcType=DECIMAL}, #{comment,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.MoneyPoolDmo" >
+    insert into t_money_pool
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="comment != null" >
+        comment,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="source != null" >
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="comment != null" >
+        #{comment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.MoneyPoolDmo" >
+    update t_money_pool
+    <set >
+      <if test="money != null" >
+        money = #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="comment != null" >
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where source = #{source,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.MoneyPoolDmo" >
+    update t_money_pool
+    set money = #{money,jdbcType=DECIMAL},
+      comment = #{comment,jdbcType=VARCHAR}
+    where source = #{source,jdbcType=VARCHAR}
+  </update>
+</mapper>

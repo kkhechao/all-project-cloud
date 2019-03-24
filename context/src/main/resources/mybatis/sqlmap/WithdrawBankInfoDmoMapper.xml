@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.WithdrawBankInfoDmoMapper" >
+  <resultMap id="BaseResultMap" type="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.WithdrawBankInfoDmo" >
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="tax_number" property="taxNumber" jdbcType="VARCHAR" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="card_number" property="cardNumber" jdbcType="VARCHAR" />
+    <result column="bank_address" property="bankAddress" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="withdraw_bill_id" property="withdrawBillId" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.WithdrawBankInfoDmo" >
+    insert into t_withdraw_bank_info (bank_name, type, tax_number, 
+      account, card_number, bank_address, 
+      name, withdraw_bill_id)
+    values (#{bankName,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{taxNumber,jdbcType=VARCHAR}, 
+      #{account,jdbcType=VARCHAR}, #{cardNumber,jdbcType=VARCHAR}, #{bankAddress,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{withdrawBillId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zqkh.wallet.context.appservice.impl.domain.repository.mappers.dmo.WithdrawBankInfoDmo" >
+    insert into t_withdraw_bank_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bankName != null" >
+        bank_name,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="taxNumber != null" >
+        tax_number,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="cardNumber != null" >
+        card_number,
+      </if>
+      <if test="bankAddress != null" >
+        bank_address,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="withdrawBillId != null" >
+        withdraw_bill_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bankName != null" >
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="taxNumber != null" >
+        #{taxNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNumber != null" >
+        #{cardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAddress != null" >
+        #{bankAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="withdrawBillId != null" >
+        #{withdrawBillId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

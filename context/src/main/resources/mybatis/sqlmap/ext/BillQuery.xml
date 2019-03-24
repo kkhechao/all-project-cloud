@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zqkh.wallet.context.appservice.impl.domain.repository.query.BillQuery" >
+  <select id="selectBillIdsByAccountId" resultType="java.lang.String" parameterType="java.lang.String">
+      SELECT
+            t.id
+        FROM
+            (
+                SELECT DISTINCT
+                    b.id,
+                    b.create_time
+                FROM
+                    t_bill b
+                LEFT JOIN t_funding_detail fd ON b.id = fd.bill_id
+                WHERE
+                    fd.account_id = #{userAccountId}
+                AND fd.type = 'RMB'
+            ) t
+        ORDER BY
+            t.create_time DESC
+  </select>
+
+    <select id="searchWithdrawBill" resultType="java.lang.String">
+        SELECT
+        wb.id
+        FROM
+        t_withdraw_bill wb
+        LEFT JOIN t_bill b ON wb.id = b.id
+        LEFT JOIN t_withdraw_bank_info wbi ON wbi.withdraw_bill_id = wb.id
+        <where>
+            <if test="status!=null and status!=''">
+                wb.status = #{status}
+            </if>
+            <if test="billId!=null and billId!=''">
+                and wb.id = #{billId}
+            </if>
+            <if test="cardNumber!=null and cardNumber!=''">
+                and wbi.card_number = #{cardNumber}
+            </if>
+            <if test="userId!=null and userId!=''">
+                and b.user_id = #{userId}
+            </if>
+            <if test="withdrawBankCardUserName!=null and withdrawBankCardUserName!=''">
+                and wbi.name = #{withdrawBankCardUserName}
+            </if>
+            <if test="withdrawType=='PRIVATE'">
+                and (wbi.type = 'PRIVATE' OR wbi.type is null)
+            </if>
+            <if test="withdrawType=='PUBLIC'">
+                and wbi.type = 'PUBLIC'
+            </if>
+            <if test="startTime!=null and startTime!=''">
+                and DATE_FORMAT(b.create_time, '%Y-%m-%d') <![CDATA[>=]]> #{startTime}
+            </if>
+            <if test="endTime!=null and endTime!=''">
+                and DATE_FORMAT(b.create_time, '%Y-%m-%d') <![CDATA[<=]]> #{endTime}
+            </if>
+        </where>
+        order by b.create_time desc
+    </select>
+
+    <select id="searchWithdrawBillByBillIds" resultType="java.lang.String">
+        select wb.id from t_withdraw_bill wb left join t_bill b on wb.id = b.id where
+        wb.status='CHECK_SUCCESS' and b.id in
+        <foreach collection="billIds" item="billId" index="index"
+                 open="(" close=")" separator=",">
+            #{billId}
+        </foreach>
+    </select>
+
+    <select id="searchPublicWithdrawBillByBillIds" resultType="java.lang.String">
+      select wb.id from t_withdraw_bill wb left join t_bill b on wb.id = b.id where
+        wb.invoice_status = 'RECEIVED' and wb.status='CHECK_SUCCESS' and b.id in
+        <foreach collection="billIds" item="billId" index="index"
+                 open="(" close=")" separator=",">
+            #{billId}
+        </foreach>
+    </select>
+
+    <select id="searchWithdrawBillBySize" resultType="java.lang.String">
+        SELECT
+        wb.id
+        FROM
+        t_withdraw_bill wb
+        LEFT JOIN t_bill b ON wb.id = b.id
+        LEFT JOIN t_withdraw_bank_info wbi ON wbi.withdraw_bill_id = wb.id
+        <where>
+            <if test="1==1">
+                wb.status = 'CHECK_SUCCESS'
+            </if>
+            <if test="billId!=null and billId!=''">
+                and wb.id = #{billId}
+            </if>
+            <if test="cardNumber!=null and cardNumber!=''">
+                and wbi.card_number = #{cardNumber}
+            </if>
+            <if test="userId!=null and userId!=''">
+                and b.user_id = #{userId}
+            </if>
+            <if test="withdrawBankCardUserName!=null and withdrawBankCardUserName!=''">
+                and wbi.name = #{withdrawBankCardUserName}
+            </if>
+            <if test="withdrawType=='PRIVATE'">
+                and (wbi.type = 'PRIVATE' OR wbi.type is null)
+            </if>
+            <if test="withdrawType=='PUBLIC'">
+                and wbi.type = 'PUBLIC'
+                and wb.invoice_status = 'RECEIVED'
+            </if>
+            <if test="startTime!=null and startTime!=''">
+                and DATE_FORMAT(b.create_time, '%Y-%m-%d') <![CDATA[>=]]> #{startTime}
+            </if>
+            <if test="endTime!=null and endTime!=''">
+                and DATE_FORMAT(b.create_time, '%Y-%m-%d') <![CDATA[<=]]> #{endTime}
+            </if>
+        </where>
+        order by b.create_time asc
+        limit 0,2000
+    </select>
+
+    <select id="selectBillIdByBillNumber" resultType="java.lang.String" parameterType="java.lang.String">
+      select id from t_bill where bill_number = #{billNumber}
+  </select>
+
+    <select id="selectPaidCountByOrderNumber" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select count(1) from t_recharge_bill where order_number = #{orderNumber} and status = 'PAID'
+    </select>
+
+    <select id="selectLatestBillIdByUserId" resultType="java.lang.String" parameterType="java.lang.String">
+        SELECT
+            b.id
+        FROM
+            t_withdraw_bill wb,
+            t_bill b
+        WHERE
+            b.id = wb.id
+        AND user_id = #{userId}
+        AND wb.`status` != 'PROCESS_FAIL'
+        AND wb.`status` != 'CHECK_FAIL'
+        ORDER BY
+            b.create_time DESC
+        LIMIT 0,1
+    </select>
+    
+</mapper>
